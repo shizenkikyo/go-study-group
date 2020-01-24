@@ -39,11 +39,11 @@ type Number struct {
 	index int
 }
 
-// 構造体Numberを3つの要素数なら成るスライスにして返却
-// 条件1: 3つの要素の中身は[{1} {2} {3}]とすること
-// 条件2: append関数を使用すること
+// 構造体Numberを3つの要素数から成るスライスにして返却
+// 3つの要素の中身は[{1} {2} {3}]とし、append関数を使用すること
 func Numbers() []Number {
 	// TODO Q2
+	//s := make([]Number{}, 0, 3)
 	s := []Number{}
 	s = append(s, Number{1}, Number{2}, Number{3})
 	return s
@@ -54,12 +54,47 @@ func Numbers() []Number {
 func CalcMap(m map[string]int) int {
 	// TODO Q3
 	var ret int
-	for key, val := range m {
-		if key == "yon" {
-			continue
-		}
+
+	// for key, val := range m {
+	// 	if key == "yon" {
+	// 		continue
+	// 	}
+	// 	ret += val
+	// }
+
+	delete(m, "yon")
+	for _, val := range m {
 		ret += val
 	}
+	return ret
+}
+
+type Model struct {
+	Value int
+}
+
+// 与えられたスライスのModel全てのValueに5を足す破壊的な関数を作成
+func Add(models []Model) {
+	// TODO  Q4
+	for i := range models {
+		models[i].Value += 5
+	}
+}
+
+// 引数のスライスには重複な値が格納されているのでユニークな値のスライスに加工して返却
+// 順序はスライスに格納されている順番のまま返却すること
+// ex) 引数:[]slice{21,21,4,5} 戻り値:[]int{21,4,5}
+func Unique(slice []int) []int {
+	// TODO Q5
+	ret := []int{}
+	m := make(map[int]bool)
+	for _, value := range slice {
+		if m[value] == false {
+			m[value] = true
+			ret = append(ret, value)
+		}
+	}
+
 	return ret
 }
 
