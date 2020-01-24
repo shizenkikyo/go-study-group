@@ -1,5 +1,7 @@
 package chapter2
 
+import "fmt"
+
 // 引数のスライスsliceの要素数が
 // 0の場合、0とエラー
 // 2以下の場合、要素を掛け算
@@ -11,7 +13,26 @@ func Calc(slice []int) (int, error) {
 	// fmt.Errorf(“invalid op=%s”, op) などでエラー内容を返却するのがよい
 	// https://golang.org/pkg/fmt/#Errorf
 
-	return 0, nil
+	count := len(slice)
+
+	if count <= 0 {
+		return 0, fmt.Errorf("invalid slice")
+	}
+
+	var result int
+	for i, value := range slice {
+		if i == 0 {
+			result = value
+			continue
+		}
+		if count > 2 {
+			result += value
+		} else {
+			result *= value
+		}
+	}
+
+	return result, nil
 }
 
 type Number struct {
@@ -23,21 +44,44 @@ type Number struct {
 // 条件2: append関数を使用すること
 func Numbers() []Number {
 	// TODO Q2
-
-	return nil
+	s := []Number{}
+	s = append(s, Number{1}, Number{2}, Number{3})
+	return s
 }
 
 // 引数mをforで回し、「値」部分だけの和を返却
 // キーに「yon」が含まれる場合は、キー「yon」に関連する値は除外すること
 func CalcMap(m map[string]int) int {
 	// TODO Q3
-
-	return 0
+	var ret int
+	for key, val := range m {
+		if key == "yon" {
+			continue
+		}
+		ret += val
+	}
+	return ret
 }
 
 // 連続するフィボナッチ数(0, 1, 1, 2, 3, 5, ...)を返す関数(クロージャ)を返却
 func Fibonacci() func() int {
 	// TODO Q4
+	s := []int{}
+	return func() int {
+		last := len(s) - 1
+		if last < 0 {
+			s = append(s, 0)
+			return 0
+		}
 
-	return nil
+		if s[last] == 0 {
+			s = append(s, 1)
+			return 1
+		}
+
+		s = append(s, s[last-1]+s[last])
+		last = len(s) - 1
+
+		return s[last]
+	}
 }
