@@ -13,26 +13,21 @@ func Calc(slice []int) (int, error) {
 	// fmt.Errorf(“invalid op=%s”, op) などでエラー内容を返却するのがよい
 	// https://golang.org/pkg/fmt/#Errorf
 
-	count := len(slice)
-
-	if count <= 0 {
+	switch len(slice) {
+	case 0:
 		return 0, fmt.Errorf("invalid slice")
+	case 1:
+		return slice[0], nil
+	case 2:
+		return slice[0] * slice[1], nil
 	}
 
-	var result int
-	for i, value := range slice {
-		if i == 0 {
-			result = value
-			continue
-		}
-		if count > 2 {
-			result += value
-		} else {
-			result *= value
-		}
+	ret := 0
+	for _, val := range slice {
+		ret += val
 	}
 
-	return result, nil
+	return ret, nil
 }
 
 type Number struct {
@@ -87,12 +82,15 @@ func Add(models []Model) {
 func Unique(slice []int) []int {
 	// TODO Q5
 	ret := []int{}
-	m := make(map[int]bool)
-	for _, value := range slice {
-		if m[value] == false {
-			m[value] = true
-			ret = append(ret, value)
+	m := make(map[int]struct{})
+	for _, val := range slice {
+		_, ok := m[val]
+		if ok {
+			continue
 		}
+
+		m[val] = struct{}{}
+		ret = append(ret, val)
 	}
 
 	return ret
