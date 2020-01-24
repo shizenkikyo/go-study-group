@@ -38,9 +38,8 @@ type Number struct {
 // 3つの要素の中身は[{1} {2} {3}]とし、append関数を使用すること
 func Numbers() []Number {
 	// TODO Q2
-	//s := make([]Number{}, 0, 3)
-	s := []Number{}
-	s = append(s, Number{1}, Number{2}, Number{3})
+	s := make([]Number, 0, 3)
+	s = append(s, Number{index: 1}, Number{index: 2}, Number{index: 3})
 	return s
 }
 
@@ -49,14 +48,6 @@ func Numbers() []Number {
 func CalcMap(m map[string]int) int {
 	// TODO Q3
 	var ret int
-
-	// for key, val := range m {
-	// 	if key == "yon" {
-	// 		continue
-	// 	}
-	// 	ret += val
-	// }
-
 	delete(m, "yon")
 	for _, val := range m {
 		ret += val
