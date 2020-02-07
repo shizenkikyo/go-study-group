@@ -9,3 +9,8 @@ type Kadai2 struct {
 	id   int
 	name string
 }
+
+func NewKadai2(i int, s string) *Kadai2 {
+	v := &Kadai2{id: i, name: s}
+	return v
+}
